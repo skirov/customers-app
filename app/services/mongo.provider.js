@@ -1,6 +1,19 @@
 angular.module('mongolab-factory', [
     'ngResource'
-]).provider('mongolabFactory', function (mongolabConfigs) {
+]).provider('mongolabCustomers', function (mongolabConfigs) {
+    this.setConfigs = function (_mongolabConfigs) {
+        angular.extend(mongolabConfigs, _mongolabConfigs);
+    };
+
+    this.$get = function ($resource) {
+        var c = mongolabConfigs;
+        var url = [c.mongolabUrl, c.dataBase, 'collections', c.collection, ':id'].join('/');
+        return $resource(url, {apiKey: c.apiKey}, {
+            update: {method: 'PUT'}
+        });
+    };
+
+}).provider('mongolabOrders', function (mongolabConfigs) {
     this.setConfigs = function (_mongolabConfigs) {
         angular.extend(mongolabConfigs, _mongolabConfigs);
     };

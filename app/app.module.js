@@ -1,29 +1,24 @@
 angular.module('customers-app', [
+    'ngRoute',
     'customersApp.templates',
     'mongolab-factory',
-    'customers-list',
-    'customers-form'
-]).config(function (mongolabFactoryProvider, $routeProvider) {
-    mongolabFactoryProvider.setConfigs({
+    'components.customersList',
+    'components.navbar'
+]).config(function (mongolabCustomersProvider, mongolabOrdersProvider, $routeProvider) {
+    mongolabCustomersProvider.setConfigs({
         collection: 'customers',
         dataBase: 'kirov-db',
         apiKey: 'PcuAcq0p7LM9Xjpt1FPN6jULOn30EVae'
     });
 
-    $routeProvider.when('/orders', {
-        template: '<orders-list></orders-list>'
-    }).when('/orders/new', {
-        template: '<new-order></new-order>'
-    }).when('/orders/edit/:id', {
-        template: '<edit-order></edit-order>'
-    }).when('/customers', {
+    mongolabOrdersProvider.setConfigs({
+        collection: 'orders',
+        dataBase: 'kirov-db',
+        apiKey: 'PcuAcq0p7LM9Xjpt1FPN6jULOn30EVae'
+    });
+
+    $routeProvider.when('/customers', {
         template: '<customers-list></customers-list>'
-    }).when('/customers/new', {
-        template: '<new-customer></new-customer>'
-    }).when('/customers/edit/:id', {
-        template: '<edit-customer></edit-customer>'
-    }).when('/customers/:id', {
-        template: '<customer-view></customer-view>'
     }).otherwise({
         redirectTo: '/customers'
     });
