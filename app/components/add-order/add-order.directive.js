@@ -1,16 +1,18 @@
 angular.module('components.addOrder', [
     'mongolab-factory'
-]).directive('addOrder', function(mongolabCustomers, mongolabOrders) {
+]).directive('addOrder', function(mongolabCustomers, mongolabOrders, $location) {
     return {
         restrict: 'E',
-        templateUrl: 'app/components/customers-list/add-order.html',
+        templateUrl: 'app/components/add-order/add-order.html',
         scope: {},
         link: function (scope) {
             scope.order = {};
             scope.customers = mongolabCustomers.query();
             
-            scope.saveOrder = function (order) {
-                
+            scope.saveOrder = function () {
+                mongolabOrders.save(scope.order).$promise.then(function () {
+                    $location.path('/orders');
+                });
             }
         }
     }

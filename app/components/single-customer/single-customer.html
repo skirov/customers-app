@@ -1,0 +1,32 @@
+<h3>
+    {{customer.firstName}} {{customer.lastName}}
+</h3>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Unit price</th>
+        <th>Total</th>
+        <th>Edit order</th>
+        <th>Delete order</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="order in orders | filter : {'customerID' : customer._id.$oid}:false">
+        <td><strong>{{$index + 1}}</strong></td>
+        <td>{{order.name}}</td>
+        <td>{{order.quantity}}</td>
+        <td>{{order.unitPrice}}</td>
+        <td>{{order.quantity * order.unitPrice}}</td>
+        <td>
+            <a href="#/orders/edit/{{order._id.$oid}}">Edit</a>
+        </td>
+        <td>
+            <button class="btn btn-danger" ng-click="deleteOrder(order)">Delete</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
